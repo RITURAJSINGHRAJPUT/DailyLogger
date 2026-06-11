@@ -339,6 +339,8 @@ const Store = {
   clearAllData() {
     localStorage.removeItem(this.STORAGE_KEY);
     localStorage.removeItem(this.ACTIVITY_KEY);
+    // Set seeded flag so that the app stays empty on reload
+    localStorage.setItem('dailylogger_seeded', 'true');
     this._notify();
   },
 
@@ -346,7 +348,9 @@ const Store = {
    * Seed with sample data for demo
    */
   seedSampleData() {
-    if (this.getAllTasks().length > 0) return;
+    if (localStorage.getItem('dailylogger_seeded') || this.getAllTasks().length > 0) return;
+
+    localStorage.setItem('dailylogger_seeded', 'true');
 
     const today = Utils.getToday();
     const yesterday = Utils.formatDateISO(new Date(Date.now() - 86400000));
