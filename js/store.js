@@ -216,8 +216,24 @@ const Store = {
       pending,
       onHold,
       projects,
-      tasks,
     };
+  },
+
+  /**
+   * Get dynamic project list (defaults + stored projects from tasks)
+   */
+  getProjectList() {
+    const defaultProjects = [
+      'ERP Implementation',
+      'HRMS',
+      'Budget Planning',
+      'Product Strategy',
+      'Internal Dev',
+    ];
+    const storedProjects = [
+      ...new Set(this.getAllTasks().map((t) => t.project).filter(Boolean)),
+    ];
+    return [...new Set([...defaultProjects, ...storedProjects])];
   },
 
   // ---------- Activity Log ----------

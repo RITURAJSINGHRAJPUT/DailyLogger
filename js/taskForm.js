@@ -16,7 +16,7 @@ const TaskForm = {
       return;
     }
 
-    const projects = Utils.getProjects();
+    const projects = Store.getProjectList();
     const container = document.getElementById('view-form');
 
     container.innerHTML = `
@@ -58,6 +58,7 @@ const TaskForm = {
               <select id="form-project" class="form-input" required>
                 <option value="">Select Project</option>
                 ${projects.map((p) => `<option value="${p}" ${isEdit && task.project === p ? 'selected' : ''}>${p}</option>`).join('')}
+                <option value="__NEW__">+ Add Custom Project...</option>
               </select>
               <span class="form-group__error hidden" id="error-project"></span>
             </div>
@@ -76,6 +77,21 @@ const TaskForm = {
             </div>
           </div>
 
+          <!-- Custom Project Input (shown when "+ Add Custom Project..." is selected) -->
+          <div class="form-group hidden" id="custom-project-group" style="margin-top:var(--space-md);">
+            <label class="form-group__label" for="form-custom-project">
+              Custom Project Name <span class="required">*</span>
+            </label>
+            <input
+              type="text"
+              id="form-custom-project"
+              class="form-input"
+              placeholder="e.g., Website Redesign"
+              autocomplete="off"
+            />
+            <span class="form-group__error hidden" id="error-custom-project"></span>
+          </div>
+
           <!-- Actions -->
           <div class="form-actions">
             <button type="button" class="btn btn--secondary" onclick="history.back()">Cancel</button>
@@ -87,6 +103,18 @@ const TaskForm = {
         </form>
       </div>
     `;
+
+    // Attach project selection change handler to show/hide custom input
+    const projectSelect = document.getElementById('form-project');
+    const customGroup = document.getElementById('custom-project-group');
+    projectSelect.addEventListener('change', (e) => {
+      if (e.target.value === '__NEW__') {
+        customGroup.classList.remove('hidden');
+        document.getElementById('form-custom-project').focus();
+      } else {
+        customGroup.classList.add('hidden');
+      }
+    });
 
     // Attach form submit handler
     document.getElementById('task-form').addEventListener('submit', (e) => {
@@ -110,7 +138,9 @@ const TaskForm = {
 
     // Gather values
     const title = document.getElementById('form-title').value.trim();
-    const project = document.getElementById('form-project').value;
+    const projectSelect = document.getElementById('form-project');
+    let project = projectSelect.value;
+    const customProject = document.getElementById('form-custom-project').value.trim();
     const status = document.getElementById('form-status').value;
     const date = isEdit ? document.getElementById('form-date').value : Utils.getToday();
 
@@ -124,6 +154,13 @@ const TaskForm = {
     if (!project) {
       this._showError('project', 'Project Name is required');
       isValid = false;
+    } else if (project === '__NEW__') {
+      if (!customProject) {
+        this._showError('custom-project', 'Custom Project Name is required');
+        isValid = false;
+      } else {
+        project = customProject;
+      }
     }
 
     if (!isValid) return;
