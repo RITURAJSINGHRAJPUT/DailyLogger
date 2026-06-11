@@ -1,0 +1,26 @@
+{
+  "name": "Daily Logger",
+  "short_name": "Daily Logger",
+  "description": "Daily Logger — Record daily activities, track tasks, and generate professional reports.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f5f7fa",
+  "theme_color": "#1a5276",
+  "orientation": "any",
+  "scope": "./",
+  "categories": ["productivity", "business"],
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='96' fill='%231a5276'/%3E%3Cpath d='M140 150h232v40H140zM140 230h232v40H140zM140 310h160v40H140z' fill='white' rx='8'/%3E%3Ccircle cx='370' cy='330' r='60' fill='%2327ae60'/%3E%3Cpath d='M340 330l20 20 40-40' stroke='white' stroke-width='10' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='36' fill='%231a5276'/%3E%3Cpath d='M52 56h88v16H52zM52 88h88v16H52zM52 120h56v16H52z' fill='white' rx='4'/%3E%3Ccircle cx='140' cy='128' r='24' fill='%2327ae60'/%3E%3Cpath d='M128 128l8 8 16-16' stroke='white' stroke-width='4' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

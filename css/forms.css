@@ -1,0 +1,162 @@
+/* ============================================
+   Form Styles
+   ============================================ */
+
+.form-view {
+  padding: var(--space-md);
+  padding-top: calc(var(--nav-height) + var(--space-md));
+  padding-bottom: calc(var(--bottom-nav-height) + var(--space-xl));
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+}
+
+.form-view__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+}
+
+.form-view__back {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  color: var(--text-primary);
+  transition: all var(--transition-fast);
+}
+
+.form-view__back:hover {
+  background: var(--bg-tertiary);
+}
+
+.form-view__title {
+  font-size: var(--font-xl);
+  font-weight: 700;
+}
+
+/* ---------- Form Layout ---------- */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.form-group__label {
+  font-size: var(--font-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.form-group__label .required {
+  color: #e74c3c;
+  margin-left: 2px;
+}
+
+.form-group__hint {
+  font-size: var(--font-xs);
+  color: var(--text-tertiary);
+}
+
+/* ---------- Input Fields ---------- */
+.form-input {
+  width: 100%;
+  padding: 12px 16px;
+  background: var(--bg-tertiary);
+  border: 1.5px solid transparent;
+  border-radius: var(--radius-md);
+  font-size: var(--font-base);
+  color: var(--text-primary);
+  outline: none;
+  transition: all var(--transition-fast);
+}
+
+.form-input::placeholder {
+  color: var(--text-tertiary);
+}
+
+.form-input:hover {
+  background: var(--bg-primary);
+  border-color: var(--border-color);
+}
+
+.form-input:focus {
+  background: var(--bg-secondary);
+  border-color: var(--accent-primary-light);
+  box-shadow: 0 0 0 3px var(--accent-primary-lighter);
+}
+
+/* Textarea */
+textarea.form-input {
+  min-height: 100px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+/* Select */
+select.form-input {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%235a6a7e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 40px;
+  cursor: pointer;
+}
+
+/* Date input */
+input[type="date"].form-input {
+  cursor: pointer;
+}
+
+/* ---------- Validation ---------- */
+.form-input--error {
+  border-color: #e74c3c !important;
+  background: #fdf2f2;
+}
+
+.form-input--error:focus {
+  box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.15) !important;
+}
+
+.form-group__error {
+  font-size: var(--font-xs);
+  color: #e74c3c;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ---------- Form Row (side by side) ---------- */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+}
+
+@media (max-width: 480px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Form Actions ---------- */
+.form-actions {
+  display: flex;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--border-light);
+}
+
+.form-actions .btn {
+  flex: 1;
+}

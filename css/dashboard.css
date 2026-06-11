@@ -1,0 +1,293 @@
+/* ============================================
+   Dashboard Styles
+   ============================================ */
+
+.dashboard {
+  padding: var(--space-md);
+  padding-top: calc(var(--nav-height) + var(--space-md));
+  padding-bottom: calc(var(--bottom-nav-height) + var(--space-xl));
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+}
+
+/* ---------- Daily Overview ---------- */
+.daily-overview {
+  margin-bottom: var(--space-xl);
+}
+
+.daily-overview__label {
+  font-size: var(--font-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-tertiary);
+  margin-bottom: var(--space-md);
+}
+
+.metric-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+}
+
+.metric-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.metric-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.metric-card__label {
+  font-size: var(--font-xs);
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.metric-card__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.metric-card__value {
+  font-size: var(--font-2xl);
+  font-weight: 800;
+  line-height: 1;
+  animation: countUp 500ms ease forwards;
+}
+
+.metric-card__value--total { color: var(--accent-primary); }
+.metric-card__value--completed { color: var(--status-completed); }
+.metric-card__value--inprogress { color: var(--status-inprogress); }
+.metric-card__value--pending { color: var(--status-pending); }
+.metric-card__value--onhold { color: var(--status-onhold); }
+
+.metric-card__icon {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+}
+
+.metric-card__icon--total {
+  background: var(--accent-primary-lighter);
+  color: var(--accent-primary);
+}
+
+.metric-card__icon--completed {
+  background: var(--status-completed-bg);
+  color: var(--status-completed);
+}
+
+.metric-card__icon--inprogress {
+  background: var(--status-inprogress-bg);
+  color: var(--status-inprogress);
+}
+
+/* Secondary metrics row */
+.metric-secondary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-sm);
+}
+
+.metric-secondary__card {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+  transition: all var(--transition-base);
+}
+
+.metric-secondary__card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.metric-secondary__label {
+  font-size: var(--font-xs);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-tertiary);
+  margin-bottom: 2px;
+}
+
+.metric-secondary__value {
+  font-size: var(--font-lg);
+  font-weight: 700;
+}
+
+.metric-secondary__value--pending { color: var(--status-pending); }
+.metric-secondary__value--onhold { color: var(--status-onhold); }
+
+/* Efficiency card */
+.metric-secondary__card--efficiency {
+  background: var(--efficiency-gradient);
+  border: none;
+  color: var(--text-inverse);
+}
+
+.metric-secondary__card--efficiency .metric-secondary__label {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.metric-secondary__card--efficiency .metric-secondary__value {
+  color: var(--text-inverse);
+  font-size: var(--font-xl);
+}
+
+/* ---------- Today's Tasks ---------- */
+.today-tasks {
+  margin-bottom: var(--space-xl);
+}
+
+.task-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: var(--space-sm);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  position: relative;
+}
+
+.task-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateX(2px);
+}
+
+.task-card__accent {
+  width: 4px;
+  align-self: stretch;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.task-card__accent--completed { background: var(--status-completed); }
+.task-card__accent--inprogress { background: var(--status-inprogress); }
+.task-card__accent--pending { background: var(--status-pending); }
+.task-card__accent--onhold { background: var(--status-onhold); }
+
+.task-card__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.task-card__title {
+  font-size: var(--font-base);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.task-card__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: var(--font-xs);
+  color: var(--text-secondary);
+}
+
+.task-card__meta svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.task-card__meta-sep {
+  width: 3px;
+  height: 3px;
+  border-radius: var(--radius-full);
+  background: var(--text-tertiary);
+}
+
+.task-card__time {
+  color: var(--text-tertiary);
+  font-weight: 500;
+}
+
+.task-card__time--due {
+  color: var(--status-pending);
+}
+
+.task-card__actions {
+  position: relative;
+  flex-shrink: 0;
+}
+
+/* ---------- Recent Activity ---------- */
+.recent-activity {
+  margin-bottom: var(--space-xl);
+}
+
+.activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.activity-item {
+  display: flex;
+  gap: var(--space-md);
+  align-items: flex-start;
+  animation: fadeInUp var(--transition-slow) ease forwards;
+}
+
+.activity-item__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-full);
+  background: var(--accent-primary-light);
+  flex-shrink: 0;
+  margin-top: 6px;
+}
+
+.activity-item__dot--completed { background: var(--status-completed); }
+.activity-item__dot--recent { background: var(--accent-primary); }
+
+.activity-item__content {
+  flex: 1;
+}
+
+.activity-item__text {
+  font-size: var(--font-sm);
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+
+.activity-item__text strong {
+  font-weight: 600;
+}
+
+.activity-item__time {
+  font-size: var(--font-xs);
+  color: var(--text-tertiary);
+  margin-top: 2px;
+}

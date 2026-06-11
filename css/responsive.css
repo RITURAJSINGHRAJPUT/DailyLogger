@@ -1,0 +1,298 @@
+/* ============================================
+   Responsive Styles
+   ============================================ */
+
+/* ---------- Mobile First (default) ---------- */
+/* Base styles are mobile-first by default */
+
+/* ---------- Small phones (up to 360px) ---------- */
+@media (max-width: 360px) {
+  :root {
+    --font-3xl: 1.75rem;
+    --font-2xl: 1.375rem;
+  }
+
+  .metric-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .metric-secondary {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .metric-secondary__card:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .task-detail__field-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Tablet (768px+) ---------- */
+@media (min-width: 768px) {
+  :root {
+    --content-max-width: 720px;
+  }
+
+  .metric-cards {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-md);
+  }
+
+  .metric-secondary {
+    gap: var(--space-md);
+  }
+
+  .task-grid {
+    gap: var(--space-md);
+  }
+
+  .summary-stats {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ---------- Desktop (1024px+) ---------- */
+@media (min-width: 1024px) {
+  :root {
+    --content-max-width: 800px;
+    --nav-height: 68px;
+  }
+
+  /* Hide bottom nav on desktop */
+  .bottom-nav {
+    display: none;
+  }
+
+  /* Show desktop sidebar nav */
+  .desktop-nav {
+    display: flex !important;
+  }
+
+  /* Adjust content padding */
+  .dashboard,
+  .task-list-view,
+  .form-view,
+  .task-detail-view,
+  .summary-view,
+  .reports-view,
+  .settings-view {
+    padding-bottom: var(--space-2xl);
+    margin-left: var(--sidebar-width);
+  }
+
+  /* Desktop sidebar */
+  .desktop-nav {
+    position: fixed;
+    top: var(--nav-height);
+    left: 0;
+    bottom: 0;
+    width: var(--sidebar-width);
+    background: var(--bg-secondary);
+    border-right: 1px solid var(--border-light);
+    padding: var(--space-lg) var(--space-md);
+    flex-direction: column;
+    gap: var(--space-xs);
+    z-index: var(--z-sticky);
+    overflow-y: auto;
+  }
+
+  .desktop-nav__item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: 12px var(--space-md);
+    border-radius: var(--radius-sm);
+    font-size: var(--font-sm);
+    font-weight: 500;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+
+  .desktop-nav__item:hover {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+  }
+
+  .desktop-nav__item.active {
+    background: var(--accent-primary-lighter);
+    color: var(--accent-primary);
+    font-weight: 600;
+  }
+
+  .desktop-nav__item svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+
+  .desktop-nav__divider {
+    height: 1px;
+    background: var(--border-light);
+    margin: var(--space-md) 0;
+  }
+
+  .desktop-nav__add-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    padding: 12px;
+    background: var(--accent-primary-gradient);
+    color: var(--text-inverse);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: var(--font-sm);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    margin-bottom: var(--space-md);
+  }
+
+  .desktop-nav__add-btn:hover {
+    box-shadow: var(--shadow-fab);
+    transform: translateY(-1px);
+  }
+
+  .desktop-nav__add-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* Top nav adjustments */
+  .top-nav__menu-btn {
+    display: none;
+  }
+
+  /* Better task grid on desktop */
+  .task-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+}
+
+/* ---------- Large Desktop (1280px+) ---------- */
+@media (min-width: 1280px) {
+  :root {
+    --content-max-width: 900px;
+  }
+
+  .task-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .metric-cards {
+    gap: var(--space-md);
+  }
+}
+
+/* ---------- Print Styles ---------- */
+@media print {
+  .top-nav,
+  .bottom-nav,
+  .desktop-nav,
+  .bottom-nav__fab,
+  .btn,
+  .search-bar,
+  .filter-group,
+  .modal-backdrop,
+  .toast-container,
+  .sidebar-backdrop {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    color: black;
+    font-size: 12pt;
+  }
+
+  .dashboard,
+  .task-list-view,
+  .form-view,
+  .task-detail-view,
+  .summary-view,
+  .reports-view {
+    padding: 0;
+    margin: 0;
+    max-width: 100%;
+  }
+
+  .card,
+  .metric-card,
+  .task-card,
+  .task-card--list,
+  .summary-card {
+    box-shadow: none;
+    border: 1px solid #ddd;
+    break-inside: avoid;
+  }
+
+  .metric-card__value,
+  .summary-stat__value {
+    color: black !important;
+  }
+
+  .task-card__accent {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  .badge-status {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  @page {
+    margin: 1.5cm;
+    size: A4;
+  }
+
+  .print-header {
+    display: block !important;
+    text-align: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #333;
+  }
+
+  .print-header h1 {
+    font-size: 18pt;
+  }
+
+  .print-header p {
+    font-size: 10pt;
+    color: #666;
+  }
+}
+
+/* ---------- Safe area support (notched phones) ---------- */
+@supports (padding-top: env(safe-area-inset-top)) {
+  .top-nav {
+    padding-top: env(safe-area-inset-top);
+    height: calc(var(--nav-height) + env(safe-area-inset-top));
+  }
+
+  .dashboard,
+  .task-list-view,
+  .form-view,
+  .task-detail-view,
+  .summary-view,
+  .reports-view,
+  .settings-view {
+    padding-top: calc(var(--nav-height) + env(safe-area-inset-top) + var(--space-md));
+  }
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
