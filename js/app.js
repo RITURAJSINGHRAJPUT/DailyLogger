@@ -10,8 +10,6 @@ const App = {
    * Initialize the app
    */
   init() {
-    // Seed sample data on first run
-    Store.seedSampleData();
 
     // Register service worker
     this._registerSW();
