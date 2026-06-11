@@ -151,6 +151,11 @@ const App = {
     document.querySelectorAll('.desktop-nav__item').forEach((item) => {
       item.classList.toggle('active', item.dataset.route === route);
     });
+
+    // Sidebar nav (mobile drawer)
+    document.querySelectorAll('.sidebar__nav-item').forEach((item) => {
+      item.classList.toggle('active', item.dataset.route === route);
+    });
   },
 
   // ---------- Modal ----------
@@ -161,6 +166,35 @@ const App = {
   closeModal() {
     const backdrop = document.getElementById('modal-backdrop');
     backdrop.classList.remove('active');
+  },
+
+  // ---------- Sidebar Drawer ----------
+
+  /**
+   * Open the mobile sidebar drawer
+   */
+  openSidebar() {
+    const backdrop = document.getElementById('sidebar-backdrop');
+    if (backdrop) {
+      backdrop.classList.add('active');
+      // Highlight current route item
+      const hash = location.hash.slice(1) || '/';
+      const parts = hash.split('/').filter(Boolean);
+      const route = parts[0] || 'dashboard';
+      backdrop.querySelectorAll('.sidebar__nav-item').forEach((item) => {
+        item.classList.toggle('active', item.dataset.route === route);
+      });
+    }
+  },
+
+  /**
+   * Close the mobile sidebar drawer
+   */
+  closeSidebar() {
+    const backdrop = document.getElementById('sidebar-backdrop');
+    if (backdrop) {
+      backdrop.classList.remove('active');
+    }
   },
 
   /**
@@ -504,7 +538,7 @@ const App = {
       </div>
       <div class="modal__actions">
         <button class="btn btn--secondary" onclick="App.closeModal()">Cancel</button>
-        <button class="btn" style="background:#e74c3c;color:white;" onclick="Store.clearAllData(); App.closeModal(); App.showToast('All data cleared', 'success'); App.navigate('dashboard');">
+        <button class="btn btn--danger" onclick="Store.clearAllData(); App.closeModal(); App.showToast('All data cleared', 'success'); App.navigate('dashboard');">
           Clear Everything
         </button>
       </div>
