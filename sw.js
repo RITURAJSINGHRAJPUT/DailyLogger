@@ -2,11 +2,15 @@
 // Service Worker — Offline Support
 // ============================================
 
-const CACHE_NAME = 'worklog-v1';
+const CACHE_NAME = 'worklog-v2';
 const ASSETS = [
   './',
   './index.html',
   './manifest.json',
+  './icons/icon-192x192.png',
+  './icons/icon-512x512.png',
+  './icons/apple-touch-icon.png',
+  './icons/favicon-32x32.png',
   './css/index.css',
   './css/components.css',
   './css/dashboard.css',
