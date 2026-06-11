@@ -523,6 +523,15 @@ const App = {
       try {
         await navigator.serviceWorker.register('./sw.js');
         console.log('Service Worker registered');
+
+        // Reload the page when a new service worker takes control (automatic updates)
+        let refreshing = false;
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+          if (!refreshing) {
+            refreshing = true;
+            window.location.reload();
+          }
+        });
       } catch (err) {
         console.log('SW registration failed:', err);
       }
