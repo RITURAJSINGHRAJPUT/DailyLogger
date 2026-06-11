@@ -27,7 +27,7 @@ const TaskList = {
                 type="text"
                 class="search-bar__input"
                 id="task-search"
-                placeholder="Search tasks, people, projects..."
+                placeholder="Search tasks, projects..."
                 value="${Utils.escapeHtml(this._currentSearch)}"
                 autocomplete="off"
               />
@@ -131,6 +131,7 @@ const TaskList = {
    */
   _renderTaskCard(task) {
     const statusClass = Utils.getStatusClass(task.status);
+    const timeDisplay = Utils.formatTime(task.createdAt);
 
     return `
       <div class="task-card--list card--clickable" onclick="App.navigate('task/${task.id}')">
@@ -143,23 +144,14 @@ const TaskList = {
               ${task.status}
             </span>
           </div>
-          ${task.description ? `<div class="task-card__desc">${Utils.escapeHtml(task.description)}</div>` : ''}
           <div class="task-card__footer">
             <div class="task-card__tags">
               <span class="task-card__tag">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                ${Utils.escapeHtml(task.collaboratedWith)}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
+                ${Utils.escapeHtml(task.project)}
               </span>
-              ${
-                task.project
-                  ? `<span class="task-card__tag">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
-                      ${Utils.escapeHtml(task.project)}
-                    </span>`
-                  : ''
-              }
             </div>
-            <span class="task-card__date">${Utils.formatDate(task.date)}</span>
+            <span class="task-card__date">${Utils.formatDate(task.date)} · ${timeDisplay}</span>
           </div>
         </div>
       </div>

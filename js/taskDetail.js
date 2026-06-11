@@ -47,57 +47,26 @@ const TaskDetail = {
         <!-- Main Info Card -->
         <div class="task-detail__card">
           <div class="task-detail__field">
-            <div class="task-detail__label">Description</div>
-            <div class="task-detail__value">${Utils.escapeHtml(task.description)}</div>
+            <div class="task-detail__label">Project</div>
+            <div class="task-detail__value">${Utils.escapeHtml(task.project || 'Not specified')}</div>
           </div>
 
           <div class="task-detail__field-row">
-            <div class="task-detail__field">
-              <div class="task-detail__label">Collaborated With</div>
-              <div class="task-detail__value">
-                <span style="display:inline-flex;align-items:center;gap:6px;">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-primary-light)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                  ${Utils.escapeHtml(task.collaboratedWith)}
-                </span>
-              </div>
-            </div>
             <div class="task-detail__field">
               <div class="task-detail__label">Date</div>
               <div class="task-detail__value">${Utils.formatDateLong(task.date)}</div>
             </div>
-          </div>
-
-          <div class="task-detail__field-row">
             <div class="task-detail__field">
-              <div class="task-detail__label">Project</div>
-              <div class="task-detail__value ${!task.project ? 'task-detail__value--empty' : ''}">
-                ${task.project ? Utils.escapeHtml(task.project) : 'Not specified'}
-              </div>
-            </div>
-            <div class="task-detail__field">
-              <div class="task-detail__label">Department</div>
-              <div class="task-detail__value ${!task.department ? 'task-detail__value--empty' : ''}">
-                ${task.department ? Utils.escapeHtml(task.department) : 'Not specified'}
-              </div>
+              <div class="task-detail__label">Time Captured</div>
+              <div class="task-detail__value">${Utils.formatTime(task.createdAt)}</div>
             </div>
           </div>
-
-          ${
-            task.notes
-              ? `
-            <div class="task-detail__field">
-              <div class="task-detail__label">Notes</div>
-              <div class="task-detail__value">${Utils.escapeHtml(task.notes)}</div>
-            </div>
-          `
-              : ''
-          }
 
           <div class="task-detail__field" style="margin-bottom:0;">
-            <div class="task-detail__label">Created</div>
+            <div class="task-detail__label">Audit Details</div>
             <div class="task-detail__value" style="font-size:var(--font-sm);color:var(--text-secondary);">
-              ${Utils.formatDateLong(task.date)} · ${Utils.formatTime(task.createdAt)}
-              ${task.updatedAt !== task.createdAt ? ` · Updated ${Utils.getRelativeTime(task.updatedAt)}` : ''}
+              Task ID: ${task.id}
+              ${task.updatedAt !== task.createdAt ? `<br>Last updated: ${Utils.getRelativeTime(task.updatedAt)}` : ''}
             </div>
           </div>
         </div>

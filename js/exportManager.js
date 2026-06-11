@@ -222,7 +222,6 @@ const ExportManager = {
       onHold: tasks.filter((t) => t.status === 'On Hold').length,
     };
 
-    const collaborators = [...new Set(tasks.map((t) => t.collaboratedWith).filter(Boolean))];
     const projects = [...new Set(tasks.map((t) => t.project).filter(Boolean))];
 
     const printWindow = window.open('', '_blank');
@@ -274,10 +273,10 @@ const ExportManager = {
             <thead>
               <tr>
                 <th>Date</th>
+                <th>Time</th>
                 <th>Task</th>
-                <th>Status</th>
-                <th>Collaborated With</th>
                 <th>Project</th>
+                <th>Status</th>
               </tr>
             </thead>
             <tbody>
@@ -285,22 +284,15 @@ const ExportManager = {
                 const sc = Utils.getStatusClass(t.status);
                 return `<tr>
                   <td>${Utils.formatDate(t.date)}</td>
+                  <td>${Utils.formatTime(t.createdAt)}</td>
                   <td><strong>${Utils.escapeHtml(t.title)}</strong></td>
-                  <td><span class="tag tag-${sc}">${t.status}</span></td>
-                  <td>${Utils.escapeHtml(t.collaboratedWith)}</td>
                   <td>${Utils.escapeHtml(t.project || '-')}</td>
+                  <td><span class="tag tag-${sc}">${t.status}</span></td>
                 </tr>`;
               }).join('')}
             </tbody>
           </table>
         </div>
-
-        ${collaborators.length > 0 ? `
-          <div class="section">
-            <div class="section-title">People Collaborated With</div>
-            ${collaborators.map((c) => `<div class="list-item">• ${Utils.escapeHtml(c)}</div>`).join('')}
-          </div>
-        ` : ''}
 
         ${projects.length > 0 ? `
           <div class="section">

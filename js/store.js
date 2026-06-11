@@ -49,13 +49,9 @@ const Store = {
     const newTask = {
       id: Utils.generateUUID(),
       title: taskData.title.trim(),
-      description: taskData.description.trim(),
-      collaboratedWith: taskData.collaboratedWith.trim(),
       project: (taskData.project || '').trim(),
-      department: taskData.department || '',
       status: taskData.status || 'Pending',
       date: taskData.date || Utils.getToday(),
-      notes: (taskData.notes || '').trim(),
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
@@ -116,9 +112,7 @@ const Store = {
     return this.getAllTasks().filter(
       (t) =>
         t.title.toLowerCase().includes(q) ||
-        t.collaboratedWith.toLowerCase().includes(q) ||
-        (t.project && t.project.toLowerCase().includes(q)) ||
-        (t.description && t.description.toLowerCase().includes(q))
+        (t.project && t.project.toLowerCase().includes(q))
     );
   },
 
@@ -211,18 +205,8 @@ const Store = {
     const pending = tasks.filter((t) => t.status === 'Pending').length;
     const onHold = tasks.filter((t) => t.status === 'On Hold').length;
 
-    // Unique collaborators
-    const collaborators = [
-      ...new Set(tasks.map((t) => t.collaboratedWith).filter(Boolean)),
-    ];
-
     // Unique projects
     const projects = [...new Set(tasks.map((t) => t.project).filter(Boolean))];
-
-    // Unique departments
-    const departments = [
-      ...new Set(tasks.map((t) => t.department).filter(Boolean)),
-    ];
 
     return {
       date,
@@ -231,9 +215,7 @@ const Store = {
       inProgress,
       pending,
       onHold,
-      collaborators,
       projects,
-      departments,
       tasks,
     };
   },
@@ -359,123 +341,75 @@ const Store = {
     const sampleTasks = [
       {
         title: 'Q3 Budget Review Meeting',
-        description: 'Reviewed quarterly budget allocations with finance team. Discussed resource planning for upcoming sprint.',
-        collaboratedWith: 'Sarah Jenkins',
         project: 'Budget Planning',
-        department: 'Finance',
         status: 'Completed',
         date: today,
-        notes: 'Follow up on revised estimates by Friday',
       },
       {
         title: 'Update Project Roadmap',
-        description: 'Updated the product roadmap with new feature priorities based on client feedback.',
-        collaboratedWith: 'Self',
         project: 'Product Strategy',
-        department: 'Product',
         status: 'In Progress',
         date: today,
-        notes: '',
       },
       {
         title: 'Client Feedback Integration',
-        description: 'Reviewed and categorized client feedback from last release. Created action items for development team.',
-        collaboratedWith: 'Dev Team',
         project: 'ERP Implementation',
-        department: 'Development',
         status: 'Pending',
         date: today,
-        notes: 'Due by 5:00 PM',
       },
       {
         title: 'Sprint Planning Session',
-        description: 'Conducted sprint planning for Sprint 14. Assigned user stories and estimated effort.',
-        collaboratedWith: 'QA Team',
         project: 'ERP Implementation',
-        department: 'Development',
         status: 'Completed',
         date: today,
-        notes: '',
       },
       {
         title: 'UI Audit Review',
-        description: 'Performed comprehensive UI audit of the dashboard module. Documented inconsistencies.',
-        collaboratedWith: 'Mike Ross',
         project: 'HRMS',
-        department: 'Design',
         status: 'Completed',
         date: today,
-        notes: 'Shared audit report with design lead',
       },
       {
         title: 'Stakeholder Presentation',
-        description: 'Prepared and delivered project status presentation to stakeholders.',
-        collaboratedWith: 'Management Team',
         project: 'ERP Implementation',
-        department: 'Administration',
         status: 'Completed',
         date: today,
-        notes: 'Positive feedback received',
       },
       {
         title: 'Database Schema Review',
-        description: 'Reviewed proposed schema changes for the user management module.',
-        collaboratedWith: 'Accounts Team',
         project: 'HRMS',
-        department: 'Development',
         status: 'Completed',
         date: yesterday,
-        notes: '',
       },
       {
         title: 'Requirement Gathering - Phase 2',
-        description: 'Collected detailed requirements for ERP Phase 2 from accounts department.',
-        collaboratedWith: 'Accounts Team',
         project: 'ERP Implementation',
-        department: 'Accounts',
         status: 'Completed',
         date: yesterday,
-        notes: 'Awaiting approval from department head',
       },
       {
         title: 'Weekly Team Sync',
-        description: 'Conducted weekly sync meeting with cross-functional team members.',
-        collaboratedWith: 'Development Team',
         project: 'HRMS',
-        department: 'Development',
         status: 'Completed',
         date: yesterday,
-        notes: '',
       },
       {
         title: 'API Documentation Update',
-        description: 'Updated REST API documentation for the payment gateway integration.',
-        collaboratedWith: 'Dev Team',
         project: 'ERP Implementation',
-        department: 'Development',
         status: 'In Progress',
         date: today,
-        notes: 'Pending review from tech lead',
       },
       {
         title: 'Quarterly Sync Preparation',
-        description: 'Prepared agenda and materials for the quarterly departmental sync.',
-        collaboratedWith: 'HR Team',
         project: 'HRMS',
-        department: 'HR',
         status: 'On Hold',
         date: today,
-        notes: 'Rescheduled to next week',
       },
       {
         title: 'Testing Review - Module 3',
-        description: 'Reviewed test cases and results for Module 3 of the ERP system.',
-        collaboratedWith: 'QA Team',
         project: 'ERP Implementation',
-        department: 'QA',
         status: 'Completed',
         date: twoDaysAgo,
-        notes: 'All critical bugs resolved',
       },
     ];
 
@@ -484,7 +418,7 @@ const Store = {
     // Add sample activities
     const activities = [
       { text: 'Marked <strong>UI Audit</strong> as completed', timestamp: new Date(Date.now() - 900000).toISOString() },
-      { text: 'Added collaborator <strong>Mike Ross</strong> to project X', timestamp: new Date(Date.now() - 7200000).toISOString() },
+      { text: 'Created task <strong>Q3 Budget Review Meeting</strong>', timestamp: new Date(Date.now() - 7200000).toISOString() },
       { text: 'Started a new log for <strong>Quarterly Sync</strong>', timestamp: new Date(Date.now() - 14400000).toISOString() },
       { text: 'Completed <strong>Sprint Planning Session</strong>', timestamp: new Date(Date.now() - 18000000).toISOString() },
       { text: 'Created task <strong>API Documentation Update</strong>', timestamp: new Date(Date.now() - 21600000).toISOString() },

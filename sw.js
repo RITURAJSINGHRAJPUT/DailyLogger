@@ -2,7 +2,7 @@
 // Service Worker — Offline Support
 // ============================================
 
-const CACHE_NAME = 'worklog-v6';
+const CACHE_NAME = 'worklog-v7';
 const ASSETS = [
   './',
   './index.html',

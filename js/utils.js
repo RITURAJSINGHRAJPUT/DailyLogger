@@ -170,30 +170,21 @@ const Utils = {
     requestAnimationFrame(animate);
   },
 
-  /**
-   * Convert tasks to CSV string
-   */
   tasksToCSV(tasks) {
     const headers = [
       'Date',
+      'Time',
       'Title',
-      'Description',
-      'Status',
-      'Collaborated With',
       'Project',
-      'Department',
-      'Notes',
+      'Status',
     ];
     const rows = tasks.map((t) =>
       [
         t.date,
+        this.formatTime(t.createdAt),
         `"${(t.title || '').replace(/"/g, '""')}"`,
-        `"${(t.description || '').replace(/"/g, '""')}"`,
-        t.status,
-        `"${(t.collaboratedWith || '').replace(/"/g, '""')}"`,
         `"${(t.project || '').replace(/"/g, '""')}"`,
-        `"${(t.department || '').replace(/"/g, '""')}"`,
-        `"${(t.notes || '').replace(/"/g, '""')}"`,
+        t.status,
       ].join(',')
     );
     return [headers.join(','), ...rows].join('\n');
@@ -215,25 +206,15 @@ const Utils = {
   },
 
   /**
-   * Get department list
+   * Get project list
    */
-  getDepartments() {
+  getProjects() {
     return [
-      'Accounts',
-      'Administration',
-      'Business Development',
-      'Design',
-      'Development',
-      'Finance',
-      'HR',
-      'IT',
-      'Legal',
-      'Marketing',
-      'Operations',
-      'Product',
-      'QA',
-      'Sales',
-      'Support',
+      'ERP Implementation',
+      'HRMS',
+      'Budget Planning',
+      'Product Strategy',
+      'Internal Dev',
       'Other',
     ];
   },

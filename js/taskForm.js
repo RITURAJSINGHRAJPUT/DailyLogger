@@ -16,7 +16,7 @@ const TaskForm = {
       return;
     }
 
-    const departments = Utils.getDepartments();
+    const projects = Utils.getProjects();
     const container = document.getElementById('view-form');
 
     container.innerHTML = `
@@ -30,6 +30,7 @@ const TaskForm = {
 
         <form class="form" id="task-form" novalidate>
           <input type="hidden" id="form-task-id" value="${isEdit ? task.id : ''}" />
+          ${isEdit ? `<input type="hidden" id="form-date" value="${task.date}" />` : ''}
 
           <!-- Task Title -->
           <div class="form-group">
@@ -48,65 +49,19 @@ const TaskForm = {
             <span class="form-group__error hidden" id="error-title"></span>
           </div>
 
-          <!-- Description -->
-          <div class="form-group">
-            <label class="form-group__label" for="form-description">
-              Description <span class="required">*</span>
-            </label>
-            <textarea
-              id="form-description"
-              class="form-input"
-              placeholder="What did you work on?"
-              required
-            >${isEdit ? Utils.escapeHtml(task.description) : ''}</textarea>
-            <span class="form-group__error hidden" id="error-description"></span>
-          </div>
-
-          <!-- Collaborated With -->
-          <div class="form-group">
-            <label class="form-group__label" for="form-collaborated">
-              Collaborated With <span class="required">*</span>
-            </label>
-            <input
-              type="text"
-              id="form-collaborated"
-              class="form-input"
-              placeholder="e.g., Sarah Jenkins, QA Team"
-              value="${isEdit ? Utils.escapeHtml(task.collaboratedWith) : ''}"
-              required
-              autocomplete="off"
-            />
-            <span class="form-group__error hidden" id="error-collaborated"></span>
-          </div>
-
-          <!-- Project & Department (side by side) -->
+          <!-- Project & Status (side by side) -->
           <div class="form-row">
             <div class="form-group">
               <label class="form-group__label" for="form-project">
-                Project Name
+                Project Name <span class="required">*</span>
               </label>
-              <input
-                type="text"
-                id="form-project"
-                class="form-input"
-                placeholder="e.g., ERP Implementation"
-                value="${isEdit ? Utils.escapeHtml(task.project || '') : ''}"
-                autocomplete="off"
-              />
-            </div>
-            <div class="form-group">
-              <label class="form-group__label" for="form-department">
-                Department
-              </label>
-              <select id="form-department" class="form-input">
-                <option value="">Select Department</option>
-                ${departments.map((d) => `<option value="${d}" ${isEdit && task.department === d ? 'selected' : ''}>${d}</option>`).join('')}
+              <select id="form-project" class="form-input" required>
+                <option value="">Select Project</option>
+                ${projects.map((p) => `<option value="${p}" ${isEdit && task.project === p ? 'selected' : ''}>${p}</option>`).join('')}
               </select>
+              <span class="form-group__error hidden" id="error-project"></span>
             </div>
-          </div>
-
-          <!-- Status & Date (side by side) -->
-          <div class="form-row">
+            
             <div class="form-group">
               <label class="form-group__label" for="form-status">
                 Status <span class="required">*</span>
@@ -117,32 +72,8 @@ const TaskForm = {
                 <option value="Completed" ${isEdit && task.status === 'Completed' ? 'selected' : ''}>Completed</option>
                 <option value="On Hold" ${isEdit && task.status === 'On Hold' ? 'selected' : ''}>On Hold</option>
               </select>
+              <span class="form-group__error hidden" id="error-status"></span>
             </div>
-            <div class="form-group">
-              <label class="form-group__label" for="form-date">
-                Date <span class="required">*</span>
-              </label>
-              <input
-                type="date"
-                id="form-date"
-                class="form-input"
-                value="${isEdit ? task.date : Utils.getToday()}"
-                required
-              />
-            </div>
-          </div>
-
-          <!-- Notes -->
-          <div class="form-group">
-            <label class="form-group__label" for="form-notes">
-              Notes
-            </label>
-            <textarea
-              id="form-notes"
-              class="form-input"
-              placeholder="Additional notes or reminders..."
-              style="min-height:80px;"
-            >${isEdit ? Utils.escapeHtml(task.notes || '') : ''}</textarea>
           </div>
 
           <!-- Actions -->
@@ -179,13 +110,9 @@ const TaskForm = {
 
     // Gather values
     const title = document.getElementById('form-title').value.trim();
-    const description = document.getElementById('form-description').value.trim();
-    const collaboratedWith = document.getElementById('form-collaborated').value.trim();
-    const project = document.getElementById('form-project').value.trim();
-    const department = document.getElementById('form-department').value;
+    const project = document.getElementById('form-project').value;
     const status = document.getElementById('form-status').value;
-    const date = document.getElementById('form-date').value;
-    const notes = document.getElementById('form-notes').value.trim();
+    const date = isEdit ? document.getElementById('form-date').value : Utils.getToday();
 
     // Validate
     let isValid = true;
@@ -194,21 +121,14 @@ const TaskForm = {
       this._showError('title', 'Task title is required');
       isValid = false;
     }
-    if (!description) {
-      this._showError('description', 'Description is required');
-      isValid = false;
-    }
-    if (!collaboratedWith) {
-      this._showError('collaborated', 'Collaboration info is required');
-      isValid = false;
-    }
-    if (!date) {
+    if (!project) {
+      this._showError('project', 'Project Name is required');
       isValid = false;
     }
 
     if (!isValid) return;
 
-    const taskData = { title, description, collaboratedWith, project, department, status, date, notes };
+    const taskData = { title, project, status, date };
 
     if (isEdit) {
       const taskId = document.getElementById('form-task-id').value;
